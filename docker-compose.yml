@@ -22,6 +22,7 @@ services:
     container_name: symfony-backend-sc
     volumes:
       - ./backend:/var/www/symfony
+      - ./backend/config/jwt:/var/www/symfony/config/jwt 
     ports:
       - "9000:9000"
     networks:

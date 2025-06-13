@@ -5,11 +5,13 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -97,9 +99,15 @@ class User
 
     public function getRoles(): array
     {
-        return $this->roles;
-    }
+        $roles = $this->roles;
 
+        // garantir que l'utilisateur a au moins ROLE_USER
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
+    }
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -136,4 +144,15 @@ class User
 
         return $this;
     }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Laisse vide si tu n’as pas de données sensibles temporaires à effacer
+    }
+
 }
