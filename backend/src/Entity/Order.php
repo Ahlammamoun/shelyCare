@@ -17,7 +17,7 @@ class Order
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?User $costumer = null;
+    private ?User $customer = null;
 
     #[ORM\Column]
     private ?float $total = null;
@@ -28,10 +28,12 @@ class Order
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeSessionId = null;
     /**
      * @var Collection<int, OrderItem>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'odered')]
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy:  'order', cascade: ['persist'])]
     private Collection $orderItems;
 
     public function __construct()
@@ -44,14 +46,14 @@ class Order
         return $this->id;
     }
 
-    public function getCostumer(): ?User
+    public function getCustomer(): ?User
     {
-        return $this->costumer;
+        return $this->customer;
     }
 
-    public function setCostumer(?User $costumer): static
+    public function setCustomer(?User $customer): static
     {
-        $this->costumer = $costumer;
+        $this->customer = $customer;
 
         return $this;
     }
@@ -104,9 +106,21 @@ class Order
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems->add($orderItem);
-            $orderItem->setOdered($this);
+            $orderItem->setOrder($this);
         }
 
+        return $this;
+    }
+
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(?string $stripeSessionId): static
+    {
+        $this->stripeSessionId = $stripeSessionId;
         return $this;
     }
 
@@ -114,8 +128,8 @@ class Order
     {
         if ($this->orderItems->removeElement($orderItem)) {
             // set the owning side to null (unless already changed)
-            if ($orderItem->getOdered() === $this) {
-                $orderItem->setOdered(null);
+            if ($orderItem->getOrder() === $this) {
+                $orderItem->setOrder(null);
             }
         }
 

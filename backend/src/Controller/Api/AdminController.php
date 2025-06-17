@@ -33,7 +33,7 @@ class AdminController extends AbstractController
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'price' => $product->getPrice(),
-                'image' => $baseUrl . '/' . ltrim($product->getImage(), '/'),
+                'image' => $product->getImage(),
                 'category_id' => $product->getCategory() ? $product->getCategory()->getId() : null,
                 'category' => $product->getCategory() ? [
                     'id' => $product->getCategory()->getId(),

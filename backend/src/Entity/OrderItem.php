@@ -14,10 +14,10 @@ class OrderItem
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    private ?Order $odered = null;
+    private ?Order $order = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    private ?Product $products = null;
+    #[ORM\ManyToOne]
+    private ?Product $product = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
@@ -30,27 +30,25 @@ class OrderItem
         return $this->id;
     }
 
-    public function getOdered(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->odered;
+        return $this->order;
     }
 
-    public function setOdered(?Order $odered): static
+    public function setOrder(?Order $order): static
     {
-        $this->odered = $odered;
-
+        $this->order = $order;
         return $this;
     }
 
-    public function getProducts(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->products;
+        return $this->product;
     }
 
-    public function setProducts(?Product $products): static
+    public function setProduct(?Product $product): static
     {
-        $this->products = $products;
-
+        $this->product = $product;
         return $this;
     }
 
@@ -62,7 +60,6 @@ class OrderItem
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
@@ -74,7 +71,6 @@ class OrderItem
     public function setPrice(float $price): static
     {
         $this->price = $price;
-
         return $this;
     }
 }

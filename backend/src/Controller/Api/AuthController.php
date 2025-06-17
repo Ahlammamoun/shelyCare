@@ -51,6 +51,7 @@ class AuthController extends AbstractController
     {
         $user = $this->getUser();
         return $this->json([
+            'id' => $user->getId(),
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),

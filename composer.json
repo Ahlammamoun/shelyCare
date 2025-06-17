@@ -1,5 +1,6 @@
 {
     "require": {
-        "lexik/jwt-authentication-bundle": "^2.21"
+        "lexik/jwt-authentication-bundle": "^2.21",
+        "stripe/stripe-php": "^17.3"
     }
 }

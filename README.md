@@ -56,7 +56,6 @@ my-app/
 ### docker compose logs symfony-backend-sc
 
 ## vérifier les container
-### docker compose ps
 
 ## commande pour créer une entité
 ### php bin/console make:entity
@@ -71,4 +70,28 @@ my-app/
 ### php bin/console make:controller Api/ProductController
 
 
+## pour le upload installer pour deviner les extension du fichier 
+### composer require symfony/mime
 
+
+
+# Module de paiement Stripe / des commandes et paniers 
+## Ajout du champ stripe dans l'entité order
+
+###   #[ORM\Column(length: 255, nullable: true)]
+###   private ?string $stripeSessionId = null;
+
+## et les methodes 
+#  public function getStripeSessionId(): ?string
+# {
+#    return $this->stripeSessionId;
+# }
+
+# public function setStripeSessionId(?string $stripeSessionId): static
+# {
+#  $this->stripeSessionId = $stripeSessionId;
+#    return $this;
+# }   
+
+## installation de stripe php sdk
+### composer require stripe/stripe-php

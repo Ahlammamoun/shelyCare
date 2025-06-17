@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '80d883676466f2fe17e76bf6937e3f6571ab0f5d',
+        'reference' => '56cf3918314a18a55110cfc3a6d128fd6d5d848c',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '80d883676466f2fe17e76bf6937e3f6571ab0f5d',
+            'reference' => '56cf3918314a18a55110cfc3a6d128fd6d5d848c',
             'dev_requirement' => false,
         ),
         'lcobucci/clock' => array(
@@ -114,6 +114,15 @@
             'provided' => array(
                 0 => '1.0|2.0|3.0',
             ),
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v17.3.0',
+            'version' => '17.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'reference' => 'cfe8244f7e5f910b7fdb5c2cf77428c0acbb9f7c',
+            'dev_requirement' => false,
         ),
         'symfony/clock' => array(
             'pretty_version' => 'v6.4.13',

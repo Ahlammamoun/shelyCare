@@ -53,6 +53,7 @@ class Product
     {
         $this->orderItems = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -116,10 +117,8 @@ class Product
     public function setCreatedAt(\DateTime $createdAt): static
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
-
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
