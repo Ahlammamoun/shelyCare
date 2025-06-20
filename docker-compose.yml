@@ -11,7 +11,7 @@ services:
       MYSQL_USER: shelycare123
       MYSQL_PASSWORD: shelycare
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -28,7 +28,7 @@ services:
       APP_ENV: prod
       APP_DEBUG: 0  
     ports:
-      - "9000:9000"
+      - "9010:9000"
     networks:
       - sc-network
 
@@ -39,7 +39,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "3000:3000"
+      - "3010:3000"
     stdin_open: true
     tty: true
     networks:
