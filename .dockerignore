@@ -4,4 +4,3 @@ vendor
 tests
 *.log
 .env.local
-.env.*
