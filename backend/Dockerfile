@@ -10,4 +10,8 @@ WORKDIR /var/www/symfony
 
 COPY . .
 
-CMD php -S 0.0.0.0:9000 -t public
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Clear cache manually here if possible or via startup script
+CMD php bin/console cache:clear --env=prod && php -S 0.0.0.0:9000 -t public
+

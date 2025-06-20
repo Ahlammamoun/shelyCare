@@ -36,7 +36,7 @@ function CartPage() {
 
     const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
     const shippingCost = total >= 50 ? 0 : 3.9;
-    const grandTotal = total + shippingCost;
+ 
 
     try {
       const res = await fetch("/api/order-from-cart", {
