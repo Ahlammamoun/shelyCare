@@ -26,11 +26,11 @@ services:
       - ./backend/config/jwt:/var/www/symfony/config/jwt 
     environment:
       APP_ENV: prod
-      APP_DEBUG: 0  
-      DATABASE_URL="mysql://root:root@mysql-sc:3306/symfony?serverVersion=8.0"
-      JWT_SECRET_KEY: "/var/www/html/config/jwt/private.pem"  
-      JWT_PUBLIC_KEY: "/var/www/html/config/jwt/public.pem"  
-      JWT_PASSPHRASE: ""  # Si pas de passphrase
+      APP_DEBUG: 0
+      DATABASE_URL: "mysql://root:root@mysql-sc:3306/symfony?serverVersion=8.0"
+      JWT_SECRET_KEY: "/var/www/html/config/jwt/private.pem"
+      JWT_PUBLIC_KEY: "/var/www/html/config/jwt/public.pem"
+      JWT_PASSPHRASE: ""  
     ports:
       - "9010:9000"
     networks:
