@@ -33,7 +33,9 @@ class Order
     /**
      * @var Collection<int, OrderItem>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy:  'order', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'])]
+
+
     private Collection $orderItems;
 
     public function __construct()
@@ -135,4 +137,38 @@ class Order
 
         return $this;
     }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $shippingAddress = null;
+    public function getShippingAddress(): ?string
+    {
+        return $this->shippingAddress;
+    }
+
+    public function setShippingAddress(?string $shippingAddress): static
+    {
+        $this->shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
+
+    #[ORM\Column(type: 'float')]
+    private $shippingCost = 3.9; // Prix fixe
+
+
+    public function getShippingCost(): float
+    {
+        return $this->shippingCost;
+    }
+
+    public function setShippingCost(float $shippingCost): self
+    {
+        $this->shippingCost = $shippingCost;
+        return $this;
+    }
+
+
+
+
+
 }

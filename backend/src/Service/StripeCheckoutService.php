@@ -32,6 +32,19 @@ class StripeCheckoutService
             ];
         }
 
+        if ($order->getShippingCost() > 0) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Frais de livraison',
+                    ],
+                    'unit_amount' => (int) ($order->getShippingCost() * 100),
+                ],
+                'quantity' => 1,
+            ];
+        }
+        
         return Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,

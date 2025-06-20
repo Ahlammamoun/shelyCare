@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AbstractController
 {
-    #[Route('/checkout/{id}', name: 'checkout')]
+    #[Route('/api/checkout/{id}', name: 'checkout')]
     public function checkout(
         int $id,
         OrderRepository $orderRepository,

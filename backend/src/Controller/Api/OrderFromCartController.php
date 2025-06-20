@@ -25,18 +25,26 @@ class OrderFromCartController extends AbstractController
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
-        if (!is_array($data) || empty($data)) {
+        // ✅ Vérifie que c’est un tableau avec 'products'
+        if (!is_array($data) || !isset($data['products']) || !is_array($data['products'])) {
             return new JsonResponse(['error' => 'Données invalides'], 400);
         }
 
+        $productsData = $data['products'];
+        $shippingAddress = $data['shippingAddress'] ?? null;
+
         $order = new Order();
-        $order->setCustomer($this->getUser()); // null si non connecté
+        $order->setCustomer($this->getUser());
         $order->setCreatedAt(new \DateTimeImmutable());
         $order->setStatus('created');
 
+        if ($shippingAddress) {
+            $order->setShippingAddress($shippingAddress);
+        }
+
         $total = 0;
 
-        foreach ($data as $item) {
+        foreach ($productsData as $item) {
             if (!isset($item['id'], $item['quantity'])) {
                 continue;
             }
@@ -63,16 +71,24 @@ class OrderFromCartController extends AbstractController
             return new JsonResponse(['error' => 'Panier vide ou produits invalides'], 400);
         }
 
-        $order->setTotal($total);
+        // 🚚 Livraison gratuite dès 50 €
+        $shippingCost = $total >= 50 ? 0 : 3.9;
+
+        $order->setShippingCost($shippingCost);
+        $order->setTotal($total + $shippingCost);
+
         $em->persist($order);
         $em->flush();
+
+
 
         return new JsonResponse(['orderId' => $order->getId()]);
     }
 
 
+
     #[Route('/api/my-orders', name: 'my_orders', methods: ['GET'])]
-    public function myOrders(OrderRepository $orderRepository): JsonResponse
+    public function myOrders(OrderRepository $orderRepository, Request $request): JsonResponse
     {
         $user = $this->getUser();
 
@@ -80,16 +96,21 @@ class OrderFromCartController extends AbstractController
             return new JsonResponse(['error' => 'Non autorisé'], 401);
         }
 
+        $baseUrl = $request->getSchemeAndHttpHost(); // ⬅️ Ajouté ici
+
         $orders = $orderRepository->findBy(['customer' => $user], ['createdAt' => 'DESC']);
 
         $response = [];
         foreach ($orders as $order) {
             $items = [];
             foreach ($order->getOrderItems() as $item) {
+                $product = $item->getProduct();
                 $items[] = [
-                    'product' => $item->getProduct()->getName(),
+                    'product' => $product->getName(),
                     'quantity' => $item->getQuantity(),
                     'price' => $item->getPrice(),
+                    'image' => $baseUrl . '/' . ltrim($product->getImage(), '/'), 
+             
                 ];
             }
 
@@ -97,11 +118,16 @@ class OrderFromCartController extends AbstractController
                 'id' => $order->getId(),
                 'createdAt' => $order->getCreatedAt()->format('Y-m-d H:i'),
                 'total' => $order->getTotal(),
-                 'products' => $items,
+                 'shippingCost' => $order->getShippingCost(),
+                'products' => $items,
+                'image' => isset($items[0]) ? $items[0]['image'] : null,
+                'adress' => $order->getShippingAddress(),
+                'status' => $order->getStatus(),
             ];
         }
 
         return new JsonResponse($response);
     }
+
 
 }

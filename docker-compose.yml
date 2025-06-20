@@ -5,10 +5,11 @@ services:
   mysql-sc:
     image: mysql:8
     container_name: mysql-sc
-    restart: always
     environment:
       MYSQL_DATABASE: symfony
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: shelycare123
+      MYSQL_PASSWORD: shelycare
     ports:
       - "3306:3306"
     volumes:
@@ -23,6 +24,9 @@ services:
     volumes:
       - ./backend:/var/www/symfony
       - ./backend/config/jwt:/var/www/symfony/config/jwt 
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: 0  
     ports:
       - "9000:9000"
     networks:
