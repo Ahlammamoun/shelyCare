@@ -1,6 +1,4 @@
-.git
-node_modules
 vendor
-tests
-*.log
+node_modules
+.env
 .env.local
