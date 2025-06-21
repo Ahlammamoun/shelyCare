@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Psr\Log\LoggerInterface;
 
 class LoginController extends AbstractController
 {
@@ -19,16 +20,31 @@ class LoginController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         JWTTokenManagerInterface $JWTManager
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
+        try {
+            $data = json_decode($request->getContent(), true);
 
-        $user = $userProvider->loadUserByUsername($data['email'] ?? '');
+            $user = $userProvider->loadUserByIdentifier($data['email'] ?? '');
 
-        if (!$user || !$passwordHasher->isPasswordValid($user, $data['password'] ?? '')) {
-            return new JsonResponse(['error' => 'Identifiants invalides'], 401);
+            if (!$user || !$passwordHasher->isPasswordValid($user, $data['password'] ?? '')) {
+                return new JsonResponse(['error' => 'Identifiants invalides'], 401);
+            }
+// dd($user);
+            // 🔍 Le suspect n°1 : JWT creation
+            $token = $JWTManager->create($user);
+
+            return new JsonResponse(['token' => $token]);
+        } catch (\Throwable $e) {
+            // ✅ Log dans les logs + retour JSON de l'erreur
+            file_put_contents('php://stderr', $e->getMessage() . "\n" . $e->getTraceAsString());
+            return new JsonResponse([
+                'error' => 'Erreur interne',
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $token = $JWTManager->create($user);
-
-        return new JsonResponse(['token' => $token]);
     }
+
+
+ 
+
+
 }

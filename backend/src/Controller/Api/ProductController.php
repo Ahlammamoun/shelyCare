@@ -30,7 +30,7 @@ class ProductController extends AbstractController
                 'description' => $product->getDescription(),
                 'category' => $product->getCategory()?->getName(),
                 'price' => $product->getPrice(),
-                'image' => $baseUrl . '/' . ltrim($product->getImage(), '/'),
+                'image' => $product->getImage(),
                 'created_at' => $product->getCreatedAt()?->format('Y-m-d H:i:s'),
             ];
         }, $products);
@@ -54,7 +54,7 @@ class ProductController extends AbstractController
             'name' => $product->getName(),
             'description' => $product->getDescription(),
             'price' => $product->getPrice(),
-            'image' => $baseUrl . '/' . ltrim($product->getImage(), '/'),
+            'image' => $product->getImage(),
             'created_at' => $product->getCreatedAt()?->format('Y-m-d H:i:s'),
             'category' => $product->getCategory()?->getName(),
         ]);

@@ -22,4 +22,6 @@ class CategoryController extends AbstractController
 
         return $this->json($data);
     }
+
+    
 }

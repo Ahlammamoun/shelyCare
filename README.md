@@ -48,6 +48,7 @@ my-app/
 
 ## entrée dans le container back
 ### docker compose exec symfony-backend-sc bash
+### commande pour hasher un mot de passe 'php bin/console security:hash-password admin' pour tester l'entité user et les authorisation
 
 ## entrée dans le container mysql 
 ### docker compose exec mysql-sc mysql -uroot -proot symfony

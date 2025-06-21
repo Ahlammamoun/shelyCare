@@ -52,6 +52,7 @@ class AuthController extends AbstractController
     public function profile(): JsonResponse
     {
         $user = $this->getUser();
+        // dd($user);
         return $this->json([
             'id' => $user->getId(),
             'email' => $user->getEmail(),
