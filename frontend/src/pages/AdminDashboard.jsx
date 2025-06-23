@@ -39,6 +39,7 @@ function AdminDashboard() {
             console.error("Erreur stats :", e);
         }
     };
+    const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
         fetch(`${apiBase}/products`).then(r => r.json()).then(setProducts);
@@ -46,6 +47,8 @@ function AdminDashboard() {
         fetch(`${apiBase}/users`).then(r => r.json()).then(setUsers);
         fetch(`${apiBase}/orders`).then(r => r.json()).then(setOrders);
         fetchStats();
+        fetch(`${apiBase}/contacts`).then(r => r.json()).then(setContacts);
+
     }, []);
 
     async function uploadImage(file) {
@@ -299,7 +302,7 @@ function AdminDashboard() {
         <main style={{ padding: 20, fontFamily: 'sans-serif', maxWidth: 1200, margin: 'auto' }}>
             <h1>Administration ShelyCare</h1>
             <nav style={{ marginBottom: 20 }}>
-                {['products', 'categories', 'users', 'orders', 'stats'].map(t => (
+                {['products', 'categories', 'users', 'orders', 'stats', 'contacts'].map(t => (
                     <button key={t} onClick={() => setTab(t)}
                         style={{
                             marginRight: 10,
@@ -310,7 +313,7 @@ function AdminDashboard() {
                             border: 'none',
                             cursor: 'pointer',
                         }}>
-                        {t === 'products' ? 'Produits' : t === 'categories' ? 'Catégories' : t === 'users' ? 'Users' : t === 'orders' ? 'Commandes' : t}
+                        {t === 'products' ? 'Produits' : t === 'categories' ? 'Catégories' : t === 'users' ? 'Users' : t === 'orders' ? 'Commandes' : t === 'stats' ? 'Stats' : t === 'contacts' ? 'Contacts' : t}
                     </button>
                 ))}
             </nav>
@@ -323,7 +326,7 @@ function AdminDashboard() {
                         + Nouveau produit
                     </button>
                     {editingProduct && (
-                        <form onSubmit={saveProduct} style={{ background: '#fff0f6', padding: 15, borderRadius: 8 }}>
+                        <form onSubmit={saveProduct} style={{ border: '2px solid black', padding: 25, borderRadius: 8 }}>
                             <input type="text" name="name" placeholder="Nom" value={productForm.name} onChange={handleProductFormChange} style={inputStyle} />
                             <textarea name="description" placeholder="Description" value={productForm.description} onChange={handleProductFormChange} style={inputStyle} rows={3} />
                             <input type="number" name="price" placeholder="Prix" value={productForm.price} onChange={handleProductFormChange} style={inputStyle} />
@@ -348,19 +351,23 @@ function AdminDashboard() {
                                     <td style={td}>{p.category?.name || ''}</td>
                                     <td style={td}>{p.image ? <img src={p.image} alt="" style={{ maxWidth: 60 }} /> : '—'}</td>
                                     <td style={td}>
-                                        <button onClick={() => startEditProduct(p)} style={{  background: '#880e4f',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                marginRight: 5,
-                                                cursor: 'pointer' }}>Modifier</button>
-                                        <button onClick={() => deleteProduct(p.id)} style={{  background: '#e53935',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                cursor: 'pointer' }}>Supprimer</button>
+                                        <button onClick={() => startEditProduct(p)} style={{
+                                            background: '#880e4f',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            marginRight: 5,
+                                            cursor: 'pointer'
+                                        }}>Modifier</button>
+                                        <button onClick={() => deleteProduct(p.id)} style={{
+                                            background: '#e53935',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            cursor: 'pointer'
+                                        }}>Supprimer</button>
                                     </td>
                                 </tr>
                             ))}
@@ -375,7 +382,7 @@ function AdminDashboard() {
                     <h2>Catégories</h2>
                     <button onClick={() => startEditCategory(null)} style={{ marginBottom: 15, ...inputStyle, width: 'auto', color: 'green' }}>+ Nouvelle catégorie</button>
                     {editingCategory && (
-                        <form onSubmit={saveCategory} style={{ background: '#fff0f6', padding: 15, borderRadius: 8 }}>
+                        <form onSubmit={saveCategory} style={{ border: '2px solid black', padding: 25, borderRadius: 8 }}>
                             <input type="text" name="name" placeholder="Nom" value={categoryForm.name} onChange={handleCategoryFormChange} style={inputStyle} />
                             <button type="submit" style={inputStyle}>Enregistrer</button>
                             <button type="button" onClick={resetCategoryForm} style={inputStyle}>Annuler</button>
@@ -388,19 +395,23 @@ function AdminDashboard() {
                                 <tr key={c.id}>
                                     <td style={td}>{c.name}</td>
                                     <td style={td}>
-                                        <button onClick={() => startEditCategory(c)} style={{  background: '#880e4f',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                marginRight: 5,
-                                                cursor: 'pointer'}}>Modifier</button>
-                                        <button onClick={() => deleteCategory(c.id)} style={{  background: '#e53935',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                cursor: 'pointer' }}>Supprimer</button>
+                                        <button onClick={() => startEditCategory(c)} style={{
+                                            background: '#880e4f',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            marginRight: 5,
+                                            cursor: 'pointer'
+                                        }}>Modifier</button>
+                                        <button onClick={() => deleteCategory(c.id)} style={{
+                                            background: '#e53935',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            cursor: 'pointer'
+                                        }}>Supprimer</button>
                                     </td>
                                 </tr>
                             ))}
@@ -415,7 +426,7 @@ function AdminDashboard() {
                     <h2>Utilisateurs</h2>
                     <button onClick={() => startEditUser(null)} style={{ marginBottom: 15, ...inputStyle, width: 'auto', color: 'green' }}>+ Nouvel utilisateur</button>
                     {editingUser && (
-                        <form onSubmit={saveUser} style={{ background: '#fff0f6', padding: 15, borderRadius: 8 }}>
+                        <form onSubmit={saveUser} style={{ border: '2px solid black', padding: 25, borderRadius: 8  }}>
                             <input type="text" name="firstname" placeholder="Prénom" value={userForm.firstname} onChange={handleUserFormChange} style={inputStyle} />
                             <input type="text" name="lastname" placeholder="Nom" value={userForm.lastname} onChange={handleUserFormChange} style={inputStyle} />
                             <input type="email" name="email" placeholder="Email" value={userForm.email} onChange={handleUserFormChange} style={inputStyle} />
@@ -435,19 +446,23 @@ function AdminDashboard() {
                                     <td style={td}>{u.email}</td>
                                     <td style={td}>{u.roles.join(', ')}</td>
                                     <td style={td}>
-                                        <button onClick={() => startEditUser(u)} style={{      background: '#880e4f',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                marginRight: 5,
-                                                cursor: 'pointer'}}>Modifier</button>
-                                        <button onClick={() => deleteUser(u.id)} style={{   background: '#e53935',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 10px',
-                                                borderRadius: 5,
-                                                cursor: 'pointer'}}>Supprimer</button>
+                                        <button onClick={() => startEditUser(u)} style={{
+                                            background: '#880e4f',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            marginRight: 5,
+                                            cursor: 'pointer'
+                                        }}>Modifier</button>
+                                        <button onClick={() => deleteUser(u.id)} style={{
+                                            background: '#e53935',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '6px 10px',
+                                            borderRadius: 5,
+                                            cursor: 'pointer'
+                                        }}>Supprimer</button>
                                     </td>
                                 </tr>
                             ))}
@@ -665,10 +680,37 @@ function AdminDashboard() {
                     <p style={{ background: '#ffe0e0', padding: '10px', borderRadius: '5px' }}>
                         🏆 <strong>{stats.topProduct}</strong>
                     </p>
-
                 </div>
+
             )}
 
+            {/* contacts */}
+            {tab === 'contacts' && (
+                <>
+                    <h2>Messages de contact</h2>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                            <tr>
+
+                                <th style={th}>Nom</th>
+                                <th style={th}>Email</th>
+                                <th style={th}>Message</th>
+                                <th style={th}>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {contacts.map(msg => (
+                                <tr key={msg.id}>
+                                    <td style={td}>{msg.name}</td>
+                                    <td style={td}>{msg.contact}</td>
+                                    <td style={td}>{msg.message}</td>
+                                    <td style={td}>{msg.created_at}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
+            )}
 
             <button
                 onClick={() => navigate('/')}

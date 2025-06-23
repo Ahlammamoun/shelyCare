@@ -17,6 +17,8 @@ function CartPage() {
   const shippingCost = total >= 50 ? 0 : 3.9;
   const grandTotal = total + shippingCost;
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const [acceptedConditions, setAcceptedConditions] = useState(false);
+
 
 
 
@@ -34,9 +36,6 @@ function CartPage() {
       return;
     }
 
-    const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
-    const shippingCost = total >= 50 ? 0 : 3.9;
- 
 
     try {
       const res = await fetch("/api/order-from-cart", {
@@ -117,6 +116,16 @@ function CartPage() {
 
             <div style={styles.total}>
               <p><strong>Sous-total : {total.toFixed(2)} €</strong></p>
+              
+              {total < 50 ? (
+                <p style={{ color: "#c62828", fontWeight: "bold", marginBottom: "0.5rem" }}>
+                  🚚 Livraison offerte dès 50 € d'achat !
+                </p>
+              ) : (
+                <p style={{ color: "#2e7d32", fontWeight: "bold", marginBottom: "0.5rem" }}>
+                  ✅ Livraison offerte !
+                </p>
+              )}
               <p><strong>Livraison : {shippingCost.toFixed(2)} €</strong></p>
               <p><strong>Total à payer : {grandTotal.toFixed(2)} €</strong></p>
             </div>
@@ -166,17 +175,30 @@ function CartPage() {
               style={styles.input}
             />
 
+            <div style={{ marginBottom: "1rem" }}>
+              <label style={{ fontSize: "0.95rem" }}>
+                <input
+                  type="checkbox"
+                  checked={acceptedConditions}
+                  onChange={(e) => setAcceptedConditions(e.target.checked)}
+                  style={{ marginRight: "0.5rem" }}
+                />
+                J'accepte les <a href="/conditions" target="_blank" rel="noopener noreferrer">conditions légales</a>
+              </label>
+            </div>
+
             <button
               onClick={handleCheckout}
               style={{
                 ...styles.payBtn,
-                background: isFormValid() ? "#880e4f" : "#ccc",
-                cursor: isFormValid() ? "pointer" : "not-allowed"
+                background: isFormValid() && acceptedConditions ? "#880e4f" : "#ccc",
+                cursor: isFormValid() && acceptedConditions ? "pointer" : "not-allowed"
               }}
-              disabled={!isFormValid()}
+              disabled={!isFormValid() || !acceptedConditions}
             >
               💳 Payer
             </button>
+
 
           </div>
         </div>

@@ -30,7 +30,7 @@ export default function Home() {
     <main style={{
       padding: '2rem',
       fontFamily: 'sans-serif',
-      background: '#f7f7f7',
+      background: 'linear-gradient(to right, rgb(255, 220, 230), rgb(40, 40, 40))',
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
@@ -41,20 +41,21 @@ export default function Home() {
       // backgroundPosition: 'left',
       // backgroundColor: '#f7f7f7'
     }}>
-      <div style={{ width: '100%', maxWidth: '1000px' }}>
+      <div style={{ width: '100%', maxWidth: '1000px', }}>
         <section style={{
           textAlign: 'center',
           marginBottom: '2rem',
           background: 'linear-gradient(to right, #fff0f5, #ffe4e1)',
           padding: '3rem',
           borderRadius: '16px',
+          border: '1px solid black',
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}>
           <h1 style={{ color: '#880e4f', fontSize: '2rem', marginBottom: '1rem' }}>
             Bienvenue sur ShelyCare 💖
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#444', maxWidth: 600, margin: 'auto' }}>
-            Découvrez nos soins et produits de maquillage naturels pour sublimer votre beauté au quotidien.
+          <p style={{ fontSize: '1.1rem', color: '#880e4f', maxWidth: 600, margin: 'auto' }}>
+            Découvrez nos soins et produits de maquillage pour sublimer votre beauté au quotidien.
           </p>
           <p>
             <span style={{ fontSize: '2rem' }}>💄</span>
@@ -141,7 +142,7 @@ export default function Home() {
                   padding: '1rem',
                   textAlign: 'center',
                   boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                  border: '2px solid #e6e6fa',
+                  border: '1px solid black',
                 }}
               >
                 <img

@@ -47,11 +47,11 @@ export default function Login() {
     } catch (err) {
       setError(err.message);
     }
-  };
+  }; 
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif', textAlign: 'center' }}>
-      <h2>Connexion</h2>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif', textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', border:'5px', margin:'0 auto', maxWidth: '400px', margin: '2rem auto',}}>
+      <h2 style={{color: 'rgb(136, 14, 79)'}}>Connexion</h2>
       <form onSubmit={handleLogin} style={{ maxWidth: '400px', margin: 'auto' }}>
         <input
           type="email"
@@ -59,7 +59,7 @@ export default function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
+          style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem', borderRadius: '8px', border: '1px solid #ccc',}}
         />
         <input
           type="password"
@@ -67,12 +67,12 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
+          style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem', borderRadius: '8px', border: '1px solid #ccc',}}
         />
         <button
           type="submit"
           style={{
-            background: 'black',
+            background: 'rgb(136, 14, 79)',
             color: 'white',
             padding: '0.5rem 1rem',
             border: 'none',
@@ -87,7 +87,7 @@ export default function Login() {
           <Link to="/register">
             <button
               style={{
-                background: 'black',
+                background: 'rgb(136, 14, 79)',
                 color: 'white',
                 padding: '0.5rem 1rem',
                 border: 'none',

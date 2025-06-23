@@ -25,8 +25,7 @@ export default function Footer() {
       }}>
         <a href="/contact" style={{ textDecoration: 'none', color: '#880e4f' }}>📬 Nous contacter</a>
         <a href="/conditions" style={{ textDecoration: 'none', color: '#880e4f' }}>📄 Conditions générales</a>
-        <a href="/confidentialite" style={{ textDecoration: 'none', color: '#880e4f' }}>🔒 Confidentialité</a>
-        <a href="/faq" style={{ textDecoration: 'none', color: '#880e4f' }}>❓ FAQ</a>
+        <a href="/confidentiality" style={{ textDecoration: 'none', color: '#880e4f' }}>🔒 confidentiality</a>
       </div>
 
 

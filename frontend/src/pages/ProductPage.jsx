@@ -44,7 +44,7 @@ export default function ProductPage() {
     <main style={{
       fontFamily: 'Poppins, sans-serif',
       padding: '2rem',
-      background: '#fff0f6',
+      background: 'linear-gradient(to bottom, rgb(255, 210, 225), rgb(0, 0, 0))',
       minHeight: '100vh',
       display: 'flex',
       justifyContent: 'center'

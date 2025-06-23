@@ -12,6 +12,9 @@ import PaymentCancel from './pages/PaymentCancel';
 import { CartProvider } from './context/CartContext';
 import CartPage from './pages/CartPage';
 import MyOrders from './pages/MyOrders';
+import TermsAndConditions from './pages/ConditionsLegales';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Contact from './pages/Contact';
 
 export default function App() {
   return (
@@ -22,7 +25,8 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             minHeight: '100vh',
-            background: '#fff0f6'
+            background: 'linear-gradient(to bottom, rgb(255, 210, 225), rgb(0, 0, 0))',
+
           }}
         >
           <Router>
@@ -37,6 +41,9 @@ export default function App() {
               <Route path="/payment/cancel" element={<PaymentCancel />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/my-orders" element={<MyOrders />} />
+              <Route path="/conditions" element={<TermsAndConditions/>}/>
+              <Route path="/confidentiality" element={<PrivacyPolicy/>}/>
+              <Route path="/contact" element={<Contact/>}/>
             </Routes>
             <Footer />
           </Router>

@@ -109,8 +109,8 @@ class OrderFromCartController extends AbstractController
                     'product' => $product->getName(),
                     'quantity' => $item->getQuantity(),
                     'price' => $item->getPrice(),
-                    'image' => $baseUrl . '/' . ltrim($product->getImage(), '/'), 
-             
+                    'image' => $product->getImage(),
+
                 ];
             }
 
@@ -118,8 +118,9 @@ class OrderFromCartController extends AbstractController
                 'id' => $order->getId(),
                 'createdAt' => $order->getCreatedAt()->format('Y-m-d H:i'),
                 'total' => $order->getTotal(),
-                 'shippingCost' => $order->getShippingCost(),
+                'shippingCost' => $order->getShippingCost(),
                 'products' => $items,
+
                 'image' => isset($items[0]) ? $items[0]['image'] : null,
                 'adress' => $order->getShippingAddress(),
                 'status' => $order->getStatus(),

@@ -21,6 +21,10 @@ use App\Entity\OrderItem;
 use App\Repository\OrderRepository;
 use App\Repository\OrderItemRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Repository\TestimonialRepository;
+use App\Entity\Testimonial;
+
+
 
 
 #[Route('/api/admin')]
@@ -228,7 +232,7 @@ class AdminController extends AbstractController
         return $this->json(['message' => 'Catégorie supprimée']);
     }
 
-
+    // users //
     #[Route('/users', name: 'admin_users_list', methods: ['GET'])]
     public function listUsers(UserRepository $repo): JsonResponse
     {
@@ -414,7 +418,7 @@ class AdminController extends AbstractController
 
         return $this->json(['message' => 'Commande supprimée']);
     }
-
+    // statistique
     #[Route('/stats', name: 'admin_stats', methods: ['GET'])]
     public function stats(
         OrderRepository $orderRepository,
@@ -491,7 +495,29 @@ class AdminController extends AbstractController
         ]);
     }
 
+    // message contact 
+    #[Route('/contacts', name: 'admin_contacts_list', methods: ['GET'])]
+    public function listContacts(TestimonialRepository $repo): JsonResponse
+    {
+        $contacts = $repo->createQueryBuilder('t')
+            ->where('t.contact IS NOT NULL')
+            ->andWhere('t.contact != \'\'')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->getResult();
 
+        $data = array_map(fn($c) => [
+            'id' => $c->getId(),
+            'name' => $c->getName(),
+            'message' => $c->getMessage(),
+            'contact' => $c->getContact(),
+            'created_at' => method_exists($c, 'getCreatedAt') && $c->getCreatedAt()
+                ? $c->getCreatedAt()->format('Y-m-d H:i:s')
+                : null,
+        ], $contacts);
+
+        return $this->json($data);
+    }
 
 
 }

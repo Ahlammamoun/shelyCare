@@ -78,4 +78,41 @@ class Testimonial
 
         return $this;
     }
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $contact = null;
+
+    public function getContact(): ?string
+    {
+        return $this->contact;
+    }
+
+    public function setContact(?string $contact): static
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): static
+    {
+        $this->created_at = $created_at;
+        return $this;
+    }
+
+
+
+
+
+
+
 }

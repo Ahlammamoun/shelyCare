@@ -56,7 +56,7 @@ export default function NavBar() {
 
         {user?.email && (
           <Link to="/my-orders">
-            <button style={{ background: '#880e4f', color: 'white', padding: '0.5rem 1rem', borderRadius: '20px' }}>
+            <button style={{ background: 'rgb(136, 14, 79)', color: 'white', padding: '0.5rem 1rem', borderRadius: '20px' }}>
               Mes commandes
             </button>
           </Link>
@@ -81,7 +81,7 @@ export default function NavBar() {
 
         {user ? (
           <button onClick={handleLogout} style={{
-            background: 'black',
+            background: 'rgb(136, 14, 79)',
             color: 'white',
             padding: '0.5rem 1rem',
             border: 'none',
@@ -106,7 +106,7 @@ export default function NavBar() {
 }
 
 const buttonStyle = {
-  background: 'black',
+  background: 'rgb(136, 14, 79)',
   color: 'white',
   padding: '0.5rem 1rem',
   border: 'none',

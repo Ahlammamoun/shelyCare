@@ -56,7 +56,7 @@ export default function Register() {
         boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
       }}
     >
-      <h2>Créer un compte</h2>
+      <h2 style={{color: 'rgb(136, 14, 79)'}}>Créer un compte</h2>
       {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
 
       <form
