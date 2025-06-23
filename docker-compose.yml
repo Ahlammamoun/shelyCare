@@ -46,8 +46,7 @@ services:
     networks:
       - sc-network
     command: npm start
-    volumes:
-      - ./frontend:/app
+
 
   nginx-sc:
     image: nginx:stable
