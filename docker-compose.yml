@@ -45,7 +45,7 @@ services:
     tty: true
     networks:
       - sc-network
-    command: npm run build
+    command: npm start
     volumes:
       - ./frontend:/app
 
