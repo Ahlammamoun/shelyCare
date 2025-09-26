@@ -5,3 +5,4 @@ tests
 *.log
 .env.local
 .env.*
+docker-compose.yml
